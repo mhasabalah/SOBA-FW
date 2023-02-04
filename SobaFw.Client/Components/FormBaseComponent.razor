@@ -1,0 +1,31 @@
+﻿@*@typeparam TEntity
+
+<div class="card">
+    <div class="card-header">
+        <h3>@FormTitle</h3>
+    </div>
+    <EditForm Model="ViewModel" OnValidSubmit="async () => await HandleValidSubmit.InvokeAsync(ViewModel)">
+        <FluentValidationValidator />
+        <div class="card-body">
+            <div class="row">
+                @ChildContent
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <div>
+                @if(FooterContent is null)
+                {
+                    <button class="btn btn-danger mr-3" @onclick="@(async () => await OnCancel.InvokeAsync())">Cancel</button>
+                    if(!SystemFeature.Equals(SystemFeatureType.Details))
+                    {
+                        <button type="submit" class="btn btn-success m-2">Save</button>
+                    }
+                }
+                else
+                {
+                    @FooterContent
+                }
+            </div>
+        </div>
+    </EditForm>
+</div>*@

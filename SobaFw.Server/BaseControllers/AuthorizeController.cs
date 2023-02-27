@@ -1,17 +1,15 @@
 ﻿namespace SobaFw.Server;
-
 [Route("api/[controller]/[action]")]
 [ApiController]
 public class AuthorizeController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    //private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
 
-    //public AuthorizeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
-    public AuthorizeController(UserManager<ApplicationUser> userManager)
+    public AuthorizeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
     {
         _userManager = userManager;
-        //_signInManager = signInManager;
+        _signInManager = signInManager;
     }
 
     [HttpPost]
@@ -19,10 +17,10 @@ public class AuthorizeController : ControllerBase
     {
         var user = await _userManager.FindByNameAsync(parameters.UserName);
         if (user == null) return BadRequest("User does not exist");
-        //var singInResult = await _signInManager.CheckPasswordSignInAsync(user, parameters.Password, false);
-        //if (!singInResult.Succeeded) return BadRequest("Invalid password");
+        var singInResult = await _signInManager.CheckPasswordSignInAsync(user, parameters.Password, false);
+        if (!singInResult.Succeeded) return BadRequest("Invalid password");
 
-        //await _signInManager.SignInAsync(user, parameters.RememberMe);
+        await _signInManager.SignInAsync(user, parameters.RememberMe);
 
         return Ok();
     }
@@ -47,7 +45,7 @@ public class AuthorizeController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Logout()
     {
-       //await _signInManager.SignOutAsync();
+        await _signInManager.SignOutAsync();
         return Ok();
     }
 

@@ -1,12 +1,11 @@
 ﻿namespace SobaFw.Server;
-
 public class IdentityOptionsInstaller : IInstaller
 {
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        //services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
-        //    .AddEntityFrameworkStores<ApplicationContext>()
-        //    .AddDefaultTokenProviders();
+        services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<ApplicationContext>()
+            .AddDefaultTokenProviders();
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -26,14 +25,14 @@ public class IdentityOptionsInstaller : IInstaller
             options.User.RequireUniqueEmail = false;
         });
 
-        //services.ConfigureApplicationCookie(options =>
-        //{
-        //    options.Cookie.HttpOnly = true;
-        //    options.Events.OnRedirectToLogin = context =>
-        //    {
-        //        context.Response.StatusCode = 401;
-        //        return Task.CompletedTask;
-        //    };
-        //});
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.HttpOnly = true;
+            options.Events.OnRedirectToLogin = context =>
+            {
+                context.Response.StatusCode = 401;
+                return Task.CompletedTask;
+            };
+        });
     }
 }

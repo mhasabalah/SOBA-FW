@@ -8,7 +8,7 @@
 		<PackageId>$(AssemblyName)</PackageId>
 		<Authors>Soba Team</Authors>
 		<Company>SOBA</Company>
-		<Version>1.0.1</Version>
+		<Version>1.0.2</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

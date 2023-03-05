@@ -30,4 +30,3 @@ jobs:
       uses: NuGet/setup-nuget@v1.1.1
       with:
           nuget-api-key: ${{ secrets.NuGetAPIKey }}
-          nuget-version: '1.x'
